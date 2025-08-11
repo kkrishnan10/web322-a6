@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book <%= car.model %></title>
+  <link rel="stylesheet" href="/css/main.css"/>
+</head>
+<body>
+  <div class="container mx-auto h-screen flex justify-center items-center">
+    <div class="w-full max-w-md">
+      <h1 class="my-6 text-2xl">Book: <%= car.model %></h1>
+
+      
+      <form action="/book/<%= car._id %>" method="POST" class="flex flex-col gap-3 mb-6">
+        
+        <input type="date" name="returnDate" class="input input-bordered w-full" required />
+        <button class="btn btn-primary">Book Now</button>
+      </form>
+
+      <a href="/cars" class="link">Back to Cars</a>
+    </div>
+  </div>
+</body>
+</html>
+

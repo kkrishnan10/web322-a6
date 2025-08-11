@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cars</title>
+  <link rel="stylesheet" href="/css/main.css"/>
+</head>
+<body>
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+    
+    <div class="navbar bg-base-100 my-6">
+      <div class="flex-1">
+        <a class="btn btn-ghost text-xl" href="/cars">Rent a Car</a>
+      </div>
+      <div class="flex-none gap-3">
+        
+        <form method="post" action="/logout">
+          <button class="btn btn-outline">Logout</button>
+        </form>
+      </div>
+    </div>
+
+   
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;">
+      <% cars.forEach(c => {
+           const meIsRenter = c.renter && (c.renter._id?.toString?.() || c.renter.toString()) === me._id;
+      %>
+        <div class="card bg-base-100 shadow-xl" style="border-radius: 16px; overflow: hidden;">
+          
+          <figure style="height: 260px; overflow: hidden;">
+            <img src="<%= c.imageUrl %>" alt="<%= c.model %>" style="width: 100%; height: 100%; object-fit: cover;">
+          </figure>
+
+          <div class="card-body" style="padding: 16px; display: flex; flex-direction: column; justify-content: space-between; height: 150px;">
+            <h2 class="card-title" style="font-size: 18px; font-weight: 600;"><%= c.model %></h2>
+
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <% if (!c.renter) { %>
+                <span style="opacity: 0;">.</span>
+                <a href="/book/<%= c._id %>" class="btn btn-primary">Book Now</a>
+              <% } else if (meIsRenter) { %>
+                <span style="opacity: 0.7;">Return date: <%= c.returnDate || "—" %></span>
+                <form method="post" action="/return/<%= c._id %>">
+                  <button class="btn btn-secondary">Return</button>
+                </form>
+              <% } else { %>
+                <span style="opacity: 0.7;">Unavailable</span>
+                <span></span>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</body>
+</html>
+
